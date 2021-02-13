@@ -4,17 +4,28 @@ const cors = require("cors")
 var Pokedex = require('pokedex-promise-v2');
 var P = new Pokedex();
 
-const app = express()
-const port = 3000
-
+const app = express();
+const port = 3000;
 
 app.set('view engine', 'pug');
-app.use(cors())
+app.use(cors());
 
 let pokemon;
 
-app.get('/', async (req, res) => {
+class Pokemon {
+  constructor(name, id, img, type) {
+    this.name = name;
+    this.id = id;
+    this.img = img;
+    this.type = type;
+  }
 
+}
+
+let pokedex = [];
+let pokeman;
+
+app.get('/', async (req, res) => {
 
     var interval = {
       limit: 5,
@@ -29,48 +40,34 @@ app.get('/', async (req, res) => {
   //push that instance object to an array
   //loop restarts
 
-  class Pokemon {
-    constructor(name, id, img, type) {
-      this.name = name;
-      this.id = id;
-      this.img = img;
-      this.type = type;
-    }
-
-  }
-
-  let pokedex = [];
-
-
   P.getPokemonsList(interval) // with Promise
   .then(function(response) {
-
-
+    console.log(response.results);
     for ( let i = 0 ; i < response.results.length ; i++ ) {
 
       P.resource([response.results[i].url]) // with Promise
       .then(function(response) {
 
-        let instance = new Pokemon (
-          response.name, 
-          response.id, 
-          response.sprites["front_default"], 
-          response.types[0].type.name
-        )
+        // instance = new Pokemon (
+        //   response.name, 
+        //   response.id, 
+        //   response.sprites["front_default"], 
+        //   response.types[0].type.name
+        // )
 
-        console.log(instance);
+        // pokedex.push(instance);
 
 
-        // pokemon = response.map(data => ({
-
-        //   name: data.name,
-        //   id: data.id,
-        //   img: data.sprites["front_default"],
-        //   type: data.types[0].type.name
-
-        // }));
-        // return pokemon;
-
+        pokeman = response.map(data => (
+          {
+            name: data.name,
+            id: data.id,
+            img: data.sprites["front_default"],
+            type: data.types[0].type.name
+          }
+        ));
+        pokedex.push(pokeman);
+        console.log(pokedex);
       }).catch(function(error) {
         console.log('There was an ERROR: ', error);
       })
@@ -78,7 +75,7 @@ app.get('/', async (req, res) => {
 
     
     } //end loop
-  console.log(pokedex);
+    res.send( pokedex );
 
     // res.render('pokedex', { pokemon })
   }).catch(function(error) {
@@ -92,7 +89,7 @@ app.get('/', async (req, res) => {
 
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at https://localhost:${port}`)
 });
 
 
