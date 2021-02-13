@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
           }
         ));
         pokedex.push(pokeman);
-        console.log(pokedex);
+        return;
       }).catch(function(error) {
         console.log('There was an ERROR: ', error);
       })
