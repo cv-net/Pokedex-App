@@ -1,6 +1,3 @@
-// let container = document.getElementsByClassName('container');
-// let card = document.createElement('div').className = 'card';
-
 let xhr = new XMLHttpRequest();
 xhr.open("GET", "http://localhost:3000/")
 
@@ -16,25 +13,7 @@ xhr.onreadystatechange = function(){
                 </div> 
             `;
         }
-        // console.log(data);
-
-        // for ( let i = 0 ; i < data.length ; i++ ) {
-        //     card.innerHTML = `
-        //         <p>#${data[i].id}</p>
-        //         <h1>${data[i].name}</h1>
-        //         <img src="${data[i].img}">   
-        //     `;
-        //     container.innerHTML += card;
-        // }
-
-        // document.getElementById("container").innerHTML = this.responseText;
-        } //else {
-    //     console.log('Error!');
-    // }
+    }
 }
 
-
 xhr.send();
-
-
-    // module.exports = 'rest/index.js'

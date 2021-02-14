@@ -28,8 +28,8 @@ let pokeman;
 app.get('/', async (req, res) => {
 
     var interval = {
-      limit: 5,
-      offset: 0
+      limit: 150,
+      offset: 500
     }
 
   //select list of 5 pokemon, with their names and urls
@@ -48,16 +48,6 @@ app.get('/', async (req, res) => {
       P.resource([response.results[i].url]) // with Promise
       .then(function(response) {
 
-        // instance = new Pokemon (
-        //   response.name, 
-        //   response.id, 
-        //   response.sprites["front_default"], 
-        //   response.types[0].type.name
-        // )
-
-        // pokedex.push(instance);
-
-
         pokeman = response.map(data => (
           {
             name: data.name,
@@ -71,9 +61,7 @@ app.get('/', async (req, res) => {
       }).catch(function(error) {
         console.log('There was an ERROR: ', error);
       })
-
-
-    
+  
     } //end loop
     res.send( pokedex );
 
@@ -84,29 +72,9 @@ app.get('/', async (req, res) => {
 
 });
 
-// let card = document.getElementById('container');
-// card.innerHTML = pokemon.name;
-
-
 app.listen(port, () => {
   console.log(`Example app listening at https://localhost:${port}`)
 });
-
-
-// let notes = {
-//     message: "This is a key second-brain tool",
-//     img: "https://1.bp.blogspot.com/-3dwDvsI_VcA/XU3Gh-zVYXI/AAAAAAAAgSc/FZtGUNiC5hIxlcy1t2fkOA1fxTDfwtS7gCLcBGAs/w0/darkstalkers___morrigan___render_by_entemberdesigns_dcodkx9.png",
-//     timeStamp: Date.now(),
-//     post: function postMessage(note) {
-//         console.log(note);
-//         pageComments.push(note)
-//     }
-// }
-
-// app.get('/berrypicking', (req, res) => {
-//     res.render('berrypicking', { notes });
-// });
-
 
   //Define Problem
     //
